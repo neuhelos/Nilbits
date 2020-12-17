@@ -7,13 +7,13 @@ export class Post {
     @PrimaryKey()
     id!: number;
 
-    @Property() //Database Column
+    @Property({type: 'date'}) //Database Column
     createdAt = new Date();
 
-    @Property({ onUpdate: () => new Date() }) //Hook for DB Column
+    @Property({ type: 'date', onUpdate: () => new Date() }) //Hook for DB Column
     updatedAt = new Date();
 
-    @Property()
+    @Property({type: 'text'})
     title!: string;
 
 }

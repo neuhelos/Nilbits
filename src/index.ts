@@ -3,14 +3,21 @@ import { __prod__ } from "./constants";
 import { Post } from "./entities/Post";
 import microConfig from "./mikro-orm.config"
 
+
+
 const main = async () => { //In a 'main' function to access/use async
 
+    //Connect to database
     const orm = await MikroORM.init(microConfig); //method calls a promise
+    
+    //Run migrations
+    orm.getMigrator().up();
 
+    //Run SQL
     const post = orm.em.create(Post, {title: 'My First Post 1'})
     await orm.em.persistAndFlush(post)
     console.log('--------SQL 2-----------')
-    await orm.em.nativeInsert(Post, {title: "My Frist Post 2"})
+    await orm.em.nativeInsert(Post, {title: "My First Post 2"})
 
 }
 
