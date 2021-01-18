@@ -1,6 +1,6 @@
 import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
 
-@Entity()
+@Entity() // Database Table Decorator
 
 export class Post {
 

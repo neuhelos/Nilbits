@@ -6,7 +6,7 @@
   "scripts": {
     "watch": "tsc -w",
     "dev": "nodemon node dist/index.js",
-    "dev2": "ts-node src/index.ts",
+    "dev2": "nodemon --exec ts-node src/index.ts",
     "start": "node dist/index.js",
     "start2": "ts-node src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"

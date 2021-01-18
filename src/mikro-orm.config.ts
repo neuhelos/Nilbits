@@ -1,8 +1,9 @@
-import { __prod__ } from "./constants";
 import { Post } from "./entities/Post";
 import { MikroORM } from "@mikro-orm/core"
 import path from 'path'
+import { __prod__ } from "./constants";
 
+//AutoImport - Control + Space Keys
 
 export default {
     migrations: {
@@ -12,12 +13,12 @@ export default {
     },
     dbName: 'nilbits',
     type: 'postgresql',
-    entities: [Post],
+    entities: [Post], //Database Table
     //user: '', //postgreSQL user login
     //password: '',
-    debug: !__prod__,
-} as Parameters <typeof MikroORM.init>[0]; //grabbing type of function for config init object and parameter types of expected by function. Parameters returns array
-//get more autocompletion with Parameters, though not strict on properties (keys) added
+    debug: !__prod__, //show logging happening under the hood when in Development
+} as Parameters <typeof MikroORM.init>[0]; //grabbing type of function for config init object and key values expected by function. Parameters returns array
+//get more autocompletion of properties with Parameters, though not strict on properties (keys) that are possible
 
 //Or in TS can use:
 //as const; //casting to const, expecting types of properties, not entity/object as string

@@ -3,12 +3,10 @@ import { __prod__ } from "./constants";
 import { Post } from "./entities/Post";
 import microConfig from "./mikro-orm.config"
 
-
-
 const main = async () => { //In a 'main' function to access/use async
 
     //Connect to database
-    const orm = await MikroORM.init(microConfig); //method calls a promise
+    const orm = await MikroORM.init(microConfig); //method calls/returns a promise 
     
     //Run migrations
     orm.getMigrator().up();
@@ -27,6 +25,4 @@ main().catch( error => {
 
 
 
-
-
-console.log("hello world")
+console.log("NILBITS")

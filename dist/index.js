@@ -26,5 +26,5 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
 main().catch(error => {
     console.error(error);
 });
-console.log("hello world");
+console.log("NILBITS");
 //# sourceMappingURL=index.js.map
