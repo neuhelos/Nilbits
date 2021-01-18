@@ -7,7 +7,7 @@ export class Post {
     @PrimaryKey()
     id!: number;
 
-    @Property({type: 'date'}) //Database Column
+    @Property({type: 'date'}) //Database Column // default: NOW()
     createdAt = new Date();
 
     @Property({ type: 'date', onUpdate: () => new Date() }) //Hook for DB Column
