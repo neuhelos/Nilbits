@@ -8,18 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = require("@mikro-orm/core");
-const mikro_orm_config_1 = __importDefault(require("./mikro-orm.config"));
-const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    const orm = yield core_1.MikroORM.init(mikro_orm_config_1.default);
-    yield orm.getMigrator().up();
-});
-main().catch(error => {
-    console.error(error);
-});
-console.log("NILBITS");
-//# sourceMappingURL=index.js.map
+exports.Migration20210118212627 = void 0;
+const migrations_1 = require("@mikro-orm/migrations");
+class Migration20210118212627 extends migrations_1.Migration {
+    up() {
+        return __awaiter(this, void 0, void 0, function* () {
+        });
+    }
+}
+exports.Migration20210118212627 = Migration20210118212627;
+//# sourceMappingURL=Migration20210118212627.js.map
