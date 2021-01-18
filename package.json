@@ -42,5 +42,8 @@
       "./src/mikro-orm.config.ts",
       "./dist/mikro-orm.config.js"
     ]
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.7"
   }
 }
