@@ -18,8 +18,6 @@ const main = async () => { //In a 'main' function to access/use async/await
 
     const app = express();
 
-
-    
     const apolloServer = new ApolloServer({
         schema: await buildSchema({ //buildSchema returns promise
             resolvers: [HelloResolver, PostResolver],
