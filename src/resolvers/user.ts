@@ -36,14 +36,39 @@ export class UserResolver {
         @Arg('options') options: UsernamePasswordInput, //Don't need to specify Arg type, inferred as () => UsernamePasswordInput
         @Ctx() { em }: MyContext
 
-    ) {
+    ): Promise<UserResponse> {
+        
+        if(options.username.length <= 3) {
+            return {
+                errors: [
+                {
+                    field: "username",
+                    message: "Username Must Be Greater Than 3 Characters"
+                }
+                
+                ]
+            }
+        }
+
+        if(options.password.length <= 3) {
+            return {
+                errors: [
+                {
+                    field: "username",
+                    message: "Username Must Be Greater Than 3 Characters"
+                }
+                
+                ]
+            }
+        }
+        
         const hashedPassword = await argon2.hash(options.password)
         const user = em.create(User, { 
             username: options.username,
             password: hashedPassword
             })
         await em.persistAndFlush(user)
-        return user
+        return { user }
     }
 
     @Mutation(() => UserResponse)

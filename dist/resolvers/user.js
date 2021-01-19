@@ -70,13 +70,33 @@ UserResponse = __decorate([
 let UserResolver = class UserResolver {
     register(options, { em }) {
         return __awaiter(this, void 0, void 0, function* () {
+            if (options.username.length <= 3) {
+                return {
+                    errors: [
+                        {
+                            field: "username",
+                            message: "Username Must Be Greater Than 3 Characters"
+                        }
+                    ]
+                };
+            }
+            if (options.password.length <= 3) {
+                return {
+                    errors: [
+                        {
+                            field: "username",
+                            message: "Username Must Be Greater Than 3 Characters"
+                        }
+                    ]
+                };
+            }
             const hashedPassword = yield argon2_1.default.hash(options.password);
             const user = em.create(User_1.User, {
                 username: options.username,
                 password: hashedPassword
             });
             yield em.persistAndFlush(user);
-            return user;
+            return { user };
         });
     }
     login(options, { em }) {
