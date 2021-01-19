@@ -2,6 +2,7 @@ import { Post } from "./entities/Post";
 import { MikroORM } from "@mikro-orm/core"
 import path from 'path'
 import { __prod__ } from "./constants";
+import { User } from "./entities/User";
 
 //AutoImport - Control + Space Keys
 
@@ -13,7 +14,7 @@ export default {
     },
     dbName: 'nilbits',
     type: 'postgresql',
-    entities: [Post], //Database Table
+    entities: [Post, User], //Database Tables
     //user: '', //postgreSQL user login
     //password: '',
     debug: !__prod__, //show logging happening under the hood when in Development
