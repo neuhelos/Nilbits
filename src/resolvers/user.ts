@@ -31,7 +31,7 @@ class UserResponse {
 @Resolver()
 export class UserResolver {
     
-    @Mutation(() => User)
+    @Mutation(() => UserResponse)
     async register(
         @Arg('options') options: UsernamePasswordInput, //Don't need to specify Arg type, inferred as () => UsernamePasswordInput
         @Ctx() { em }: MyContext
@@ -57,7 +57,6 @@ export class UserResolver {
                     field: "username",
                     message: "Username Must Be Greater Than 3 Characters"
                 }
-                
                 ]
             }
         }
@@ -67,7 +66,24 @@ export class UserResolver {
             username: options.username,
             password: hashedPassword
             })
-        await em.persistAndFlush(user)
+
+        try {
+            await em.persistAndFlush(user)
+
+        } catch (error) {
+            //duplicate username error
+            if(error.code === '23505' || error.detail.includes("already exists")){
+            //console.log("Message :", error)
+                return {
+                    errors: [
+                    {
+                        field: "username",
+                        message: "Username Has Already Been Taken"
+                    }
+                    ]
+                }
+            }
+        }
         return { user }
     }
 

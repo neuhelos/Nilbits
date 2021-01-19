@@ -95,7 +95,21 @@ let UserResolver = class UserResolver {
                 username: options.username,
                 password: hashedPassword
             });
-            yield em.persistAndFlush(user);
+            try {
+                yield em.persistAndFlush(user);
+            }
+            catch (error) {
+                if (error.code === '23505' || error.detail.includes("already exists")) {
+                    return {
+                        errors: [
+                            {
+                                field: "username",
+                                message: "Username Has Already Been Taken"
+                            }
+                        ]
+                    };
+                }
+            }
             return { user };
         });
     }
@@ -130,7 +144,7 @@ let UserResolver = class UserResolver {
     }
 };
 __decorate([
-    type_graphql_1.Mutation(() => User_1.User),
+    type_graphql_1.Mutation(() => UserResponse),
     __param(0, type_graphql_1.Arg('options')),
     __param(1, type_graphql_1.Ctx()),
     __metadata("design:type", Function),
