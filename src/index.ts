@@ -8,6 +8,7 @@ import {ApolloServer} from 'apollo-server-express'
 import { buildSchema } from 'type-graphql'
 import { HelloResolver } from "./resolvers/hello";
 import { PostResolver } from "./resolvers/post";
+import { UserResolver } from './resolvers/user';
 
 const main = async () => { //In a 'main' function to access/use async/await
 
@@ -20,7 +21,7 @@ const main = async () => { //In a 'main' function to access/use async/await
 
     const apolloServer = new ApolloServer({
         schema: await buildSchema({ //buildSchema returns promise
-            resolvers: [HelloResolver, PostResolver],
+            resolvers: [HelloResolver, PostResolver, UserResolver],
             validate: false, //uses Class package as a validator, here turning it off
 
         }),

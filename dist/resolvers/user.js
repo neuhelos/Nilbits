@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserResolver = void 0;
 const argon2_1 = __importDefault(require("argon2"));
-const User_1 = require("src/entities/User");
+const User_1 = require("../entities/User");
 const type_graphql_1 = require("type-graphql");
 let UsernamePasswordInput = class UsernamePasswordInput {
 };
@@ -50,11 +50,12 @@ let UserResolver = class UserResolver {
                 password: hashedPassword
             });
             yield em.persistAndFlush(user);
+            return user;
         });
     }
 };
 __decorate([
-    type_graphql_1.Mutation(() => String),
+    type_graphql_1.Mutation(() => User_1.User),
     __param(0, type_graphql_1.Arg('options')),
     __param(1, type_graphql_1.Ctx()),
     __metadata("design:type", Function),

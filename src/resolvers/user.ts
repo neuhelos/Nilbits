@@ -1,7 +1,7 @@
 import argon2 from 'argon2'
-import { User } from 'src/entities/User'
+import { User } from '../entities/User'
 import { MyContext } from 'src/types'
-import {Arg, Ctx, Field, InputType, Mutation, Query, Resolver} from 'type-graphql'
+import {Arg, Ctx, Field, InputType, Mutation, Resolver} from 'type-graphql'
 
 @InputType()
 class UsernamePasswordInput {
@@ -14,7 +14,7 @@ class UsernamePasswordInput {
 @Resolver()
 export class UserResolver {
     
-    @Mutation(() => String)
+    @Mutation(() => User)
     async register(
         @Arg('options') options: UsernamePasswordInput,
         @Ctx() { em }: MyContext
@@ -26,7 +26,7 @@ export class UserResolver {
             password: hashedPassword
             })
         await em.persistAndFlush(user)
-        
+        return user
     }
 
 }
