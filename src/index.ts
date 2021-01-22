@@ -10,6 +10,12 @@ import { HelloResolver } from "./resolvers/hello";
 import { PostResolver } from "./resolvers/post";
 import { UserResolver } from './resolvers/user';
 
+import redis from 'redis'
+import session from 'express-session'
+import connectRedis from 'connect-redis'
+import { MyContext } from './types';
+
+
 const main = async () => { //In a 'main' function to access/use async/await
 
     //Connect to database
@@ -19,13 +25,36 @@ const main = async () => { //In a 'main' function to access/use async/await
 
     const app = express();
 
+    const RedisStore = connectRedis(session)
+    const redisClient = redis.createClient()
+
+    app.use(
+        session({
+            name: 'qid',
+            store: new RedisStore({ 
+                client: redisClient,
+                //disableTTL: true,
+                disableTouch: true     
+            }),
+            cookie: {
+                maxAge: 1000 * 60 * 60 * 24 * 365 * 10, //10 years
+                httpOnly: true,
+                sameSite: "lax",
+                secure: __prod__ //cookie only works in https
+            },
+            saveUninitialized: false, //will create session by default even if there is no data to store
+            secret: 'Nilbits Cookie', //env variable
+            resave: false,
+        })
+    )
+
     const apolloServer = new ApolloServer({
         schema: await buildSchema({ //buildSchema returns promise
             resolvers: [HelloResolver, PostResolver, UserResolver],
             validate: false, //uses Class package as a validator, here turning it off
 
         }),
-        context: () => ({em: orm.em})
+        context: ({req, res}): MyContext => ({em: orm.em, req, res})
     })
 
     apolloServer.applyMiddleware({ app })
